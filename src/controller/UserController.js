@@ -4,6 +4,7 @@ const { generateToken } = require('../config/jwtToken');
 const validateMongodbId = require('../utils/validateMongodbId');
 const generateRefreshToken = require('../config/refreshToken');
 const jwt = require('jsonwebtoken');
+const sendEmail = require('./emailController');
 
 const createUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
@@ -20,9 +21,8 @@ const createUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const findUser = await User.findOne({ email });
-
   if (findUser && (await findUser.isPasswordMatched(password))) {
-    const refreshToken = await generateRefreshToken(findUser?.id);
+    const refreshToken = await generateRefreshToken(findUser?._id);
     const updateduser = await User.findByIdAndUpdate(
       findUser.id,
       {
@@ -175,6 +175,41 @@ const unblockUser = asyncHandler(async (req, res) => {
   res.json({ message: 'User unblocked' });
 });
 
+const forgotPasswordToken = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ email });
+  if (!user) throw new Error('User not found with this email');
+  try {
+    const token = await user.createPasswordResetToken();
+    await user.save();
+    const resetURL = `Hi, Please follow this link to reset your password. This link is valid till 10 minutes from now. <a href="https://localhost:5000/api/users/reset-password/${token}">Click Here</>`;
+    const data = {
+      to: email,
+      subject: 'Forgot password link',
+      text: 'Hello User',
+      html: resetURL,
+    };
+    sendEmail(data);
+    res.json(token);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+
+const updatePassword = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { password } = req.body;
+  validateMongodbId(_id);
+  const user = await User.findById(_id);
+  if (password) {
+    user.password = password;
+    const updatePassword = await user.save();
+    res.json(updatePassword);
+  } else {
+    res.json(user);
+  }
+});
+
 module.exports = {
   createUser,
   loginUser,
@@ -186,4 +221,6 @@ module.exports = {
   unblockUser,
   handleRefreshToken,
   logout,
+  updatePassword,
+  forgotPasswordToken,
 };

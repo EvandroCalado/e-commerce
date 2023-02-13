@@ -1,7 +1,6 @@
 const Product = require('../models/ProductModel');
 const asyncHandler = require('express-async-handler');
 const slugify = require('slugify');
-const { query } = require('express');
 
 const createProduct = asyncHandler(async (req, res) => {
   try {
@@ -33,7 +32,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
-    const deletedProduct = await Product.findOneAndDelete(id);
+    const deletedProduct = await Product.findByIdAndDelete(id);
     res.json(deletedProduct);
   } catch (error) {
     throw new Error(error);
@@ -59,4 +58,10 @@ const getALlProducts = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { createProduct, updateProduct, getProduct, getALlProducts, deleteProduct };
+module.exports = {
+  createProduct,
+  updateProduct,
+  getProduct,
+  getALlProducts,
+  deleteProduct,
+};
