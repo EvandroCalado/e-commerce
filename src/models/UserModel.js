@@ -62,9 +62,13 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.isPasswordMatched = async function (enteredPassword) {
-  return await bcrypt.compareSync(enteredPassword, this.password, (error, result) => {
-    return result
-  });
+  return await bcrypt.compareSync(
+    enteredPassword,
+    this.password,
+    (error, result) => {
+      return result;
+    }
+  );
 };
 
 userSchema.methods.createPasswordResetToken = async function () {
@@ -74,7 +78,7 @@ userSchema.methods.createPasswordResetToken = async function () {
     .update(resetToken)
     .digest('hex');
   this.passwordResetExpires = Date.now() + 30 * 60 * 1000;
-  return resetToken
+  return resetToken;
 };
 
 module.exports = mongoose.model('User', userSchema);
