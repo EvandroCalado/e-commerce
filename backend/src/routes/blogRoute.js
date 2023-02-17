@@ -24,10 +24,10 @@ router.put(
   uploadImages
 );
 router.put('/update/:id', authMiddleware, isAdmin, updateBlog);
+router.put('/likes', authMiddleware, isAdmin, likeBlog);
+router.put('/deslikes', authMiddleware, isAdmin, deslikeBlog);
 router.get('/blog/:id', getBlog);
 router.get('/', getAllBlogs);
 router.delete('/delete/:id', authMiddleware, isAdmin, deleteBlog);
-router.put('/likes', authMiddleware, isAdmin, likeBlog);
-router.put('/deslikes', authMiddleware, isAdmin, deslikeBlog);
 
 module.exports = router;
