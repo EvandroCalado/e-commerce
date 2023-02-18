@@ -27,8 +27,12 @@
   color: var(--color-primary);
 }
 
+.small-banner {
+  width: 49%;
+}
+
 .small-banner-content {
-  top: 25%;
+  top: 15%;
   left: 10%;
 }
 
@@ -54,4 +58,27 @@
   line-height: 22px;
   letter-spacing: 0.4px;
   color: var(--color-primary);
+}
+
+.home-wrapper-2 {
+  background-color: var(--color-white);
+}
+
+.categories {
+  background-color: var(--color-white);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+}
+
+.categories > div {
+  width: 24%;
+}
+
+.categories > div:nth-child(1),
+.categories > div:nth-child(2),
+.categories > div:nth-child(3),
+.categories > div:nth-child(5),
+.categories > div:nth-child(6),
+.categories > div:nth-child(7) {
+  border-right: 1px solid rgba(99, 83, 83, 0.1);
 }

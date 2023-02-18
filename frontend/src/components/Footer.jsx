@@ -56,18 +56,18 @@ const Footer = () => {
                   example@gmail.com
                 </a>
                 <div className="social-icons d-flex align-items-center gap-4 mt-4">
-                  <a className="text-white" href="#">
+                  <Link className="text-white" to="#">
                     <BsLinkedin className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </Link>
+                  <Link className="text-white" to="#">
                     <BsGithub className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </Link>
+                  <Link className="text-white" to="#">
                     <BsYoutube className="fs-4" />
-                  </a>
-                  <a className="text-white" href="#">
+                  </Link>
+                  <Link className="text-white" to="#">
                     <BsInstagram className="fs-4" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
