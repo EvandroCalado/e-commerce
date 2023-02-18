@@ -1,0 +1,13 @@
+footer {
+  background-color: var(--color-gray);
+}
+
+footer:not(:first-child) {
+  border-top: 1px solid var(--color-secondary);
+}
+
+footer .input-group span {
+  background-color: var(--color-gray);
+  color: #fff;
+  padding: 8px 17px;
+}
